@@ -14,8 +14,19 @@ datasource db {
 }
 
 enum transactionsType {
-  INCOME
-  EXPENSE
+  SAVING
+  DEBIT
+  CREDIT
+}
+
+enum accountType {
+  SAVING
+  CURRENT
+}
+
+enum Role {
+  USER
+  ADMIN
 }
 
 model Transactions {
@@ -24,4 +35,20 @@ model Transactions {
   type transactionsType
   description String?
   createdAt DateTime @default(now())
+}
+
+model User {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  phoneNumber String @unique
+  password String
+  bankAccountNo String? @unique
+  ifscCode String?
+  accountType accountType @default(SAVING)
+  isVerified Boolean @default(false)
+  role Role @default(USER)
+  razorPayCustomerId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
