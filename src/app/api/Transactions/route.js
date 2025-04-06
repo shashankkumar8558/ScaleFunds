@@ -8,7 +8,8 @@ try {
     data: {
       amount,
       type,
-      description
+      description,
+      userId
     }
   })
   
@@ -21,13 +22,9 @@ try {
 export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url)
-    const id = searchParams.get("id");
+    //const id = searchParams.get("id");
     
-    const getTransactions = await prisma.transactions.findUnique({
-      where:{
-        id
-      }
-    })
+    const getTransactions = await prisma.transactions.findMany();
     return new Response(JSON.stringify(getTransactions),{status : 200})
   } catch (error) {
     return new Response(JSON.stringify({error : "Failed to get Transactions History"}),{status:500})
