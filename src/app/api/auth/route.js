@@ -1,3 +1,4 @@
+import { authUserMiddleware } from "@/lib/authMiddleware";
 import { generateToken } from "@/lib/jwt";
 import { prisma } from "@/lib/prisma";
 
@@ -31,7 +32,7 @@ export async function POST(req) {
       accessToken,
       refreshToken
     }),{status:201});
-    
+
   } catch (error) {
     return new Response(JSON.stringify({error : "Error logging in"}),{status : 500});
   }
